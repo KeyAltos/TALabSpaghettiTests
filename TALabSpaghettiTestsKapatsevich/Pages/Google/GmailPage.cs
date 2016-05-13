@@ -115,16 +115,21 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         public bool IsMessageFromUserInCurrentFolder(User fromWhoUser, string title)
         {
             string xPathToUserMessage = "//span[@email]";
+
+            var a = driver.FindElements(By.XPath(xPathToUserMessage));
+
             foreach (var element in driver.FindElements(By.XPath(xPathToUserMessage)))
-            {                
+            {
+                var c = element.Displayed;
+                var b = element.GetAttribute("email").Contains(fromWhoUser.Username);
                 if (element.Displayed && element.GetAttribute("email").Contains(fromWhoUser.Username))
                 {                    
-                    var parentElement = element.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                    HighLightElement(parentElement);
+                    var parentElement = element.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));                    
                     var titleElement = parentElement.FindElement(By.XPath("./td/div/div/div/span"));
-                    HighLightElement(titleElement);
+                    
                     if (titleElement.Text.Contains(title))
                     {
+                        HighLightElement(titleElement);
                         return true;
                     }                    
                 }
@@ -186,33 +191,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         {
             filtersCatButton.Click();
         }
-        #endregion
-
-
-        //public bool CheckNewInputMessages(string oldInputMessagesText, int timeForChecking)
-        //{
-        //    var elementForChecking = setOfNavigationLinks.GetElementOnLinkTextOnRussian(Constants.gmailInputMessagesIdentifier);
-
-        //    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeForChecking));
-
-        //    try
-        //    {
-        //        wait.Until(ExpectedConditions.TextToBePresentInElement(elementForChecking, oldInputMessagesText));
-        //    }
-        //    catch (WebDriverTimeoutException)
-        //    {
-
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-
-        //public string RememberCurrentInputMessagesText()
-        //{
-        //    return setOfNavigationLinks.GetElementOnLinkTextOnRussian(Constants.gmailInputMessagesIdentifier).Text;
-        //}
+        #endregion               
 
         #region private methods
         private void SubmitButtonInNewWindow(string buttonXpathLocator)

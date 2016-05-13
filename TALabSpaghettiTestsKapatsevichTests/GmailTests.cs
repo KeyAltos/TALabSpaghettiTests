@@ -79,8 +79,8 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
         [TearDown]
         public void TearDown()
-        {            
-            
+        {
+            gmailService.LogOut();
         }
 
         [TestFixtureTearDown]
@@ -105,8 +105,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
             gmailService.WriteAndSendMessage(userTwo.Username, Constants.NOT_SPAM_MESSAGE);
 
             gmailService.LogOutAndChangeAccount(userTwo);
-
-            //gmailService.LoginIn(userTwo);//////DELETE
+            
 
             // assert
             Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne,Constants.SPAM_MESSAGE));
@@ -118,10 +117,10 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             gmailService.LoginIn(userTwo);
 
-            //gmailService.SetRequestForForwardMailToUser(userThree);
-            //gmailService.LogOutAndChangeAccount(userThree);
-            //gmailService.ConfirmForwardEmailRequset();
-            //gmailService.LogOutAndChangeAccount(userTwo);
+            gmailService.SetRequestForForwardMailToUser(userThree);
+            gmailService.LogOutAndChangeAccount(userThree);
+            gmailService.ConfirmForwardEmailRequset();
+            gmailService.LogOutAndChangeAccount(userTwo);
 
             gmailService.SetForwardMailToConfirmedUser(userThree);
 

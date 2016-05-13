@@ -46,9 +46,7 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
 
         public static readonly TimeSpan WAITING_TIME = new TimeSpan(0, 0, 10);
 
-        #region Spam
-        public static readonly string TITLE_FOR_TEST_SPAM_MESSAGE = "Spam message title";
-        public static readonly string TEXT_FOR_TEST_SPAM_MESSAGE = "Spam message text";
+        #region Spam        
         public static readonly string XPATH_LOCATOR_FOR_SPAM_BUTTON = "//div[@gh='mtb']//div[@act='9']";
         #endregion
 
