@@ -24,6 +24,17 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             return new WebDriverFactory().GetDriver();
         }
 
+        public static void ClearCookies()
+        {
+            driver.Manage().Cookies.DeleteAllCookies();            
+        }
+
+        public static void CloseBrowser()
+        {
+            driver.Quit();
+        }
+
+
         public static void DisposeDriver()
         {
             if (driver != null)

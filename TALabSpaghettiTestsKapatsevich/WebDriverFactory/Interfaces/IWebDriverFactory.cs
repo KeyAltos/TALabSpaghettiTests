@@ -10,5 +10,6 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
     public interface IWebDriverFactory
     {
         IWebDriver GetDriver();
+        void CloseDriver();
     }
 }

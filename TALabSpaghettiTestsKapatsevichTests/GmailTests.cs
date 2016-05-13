@@ -14,6 +14,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System.Threading;
 using OpenQA.Selenium.Chrome;
+using TALabSpaghettiTestsKapatsevich.Utilities;
 
 namespace TALabSpaghettiTestsKapatsevichTests
 {
@@ -53,7 +54,8 @@ namespace TALabSpaghettiTestsKapatsevichTests
         private IWebDriver driver;
         private User userOne, userTwo, userThree;
         private GmailService gmailService;
-        private IWebDriverFactorySetter driverFactory;
+        //private IWebDriverFactorySetter driverFactory;
+        private IWebDriverFactory driverFactory;
         private WebBrowsers browserForTesting;
 
         [TestFixtureSetUp]
@@ -64,29 +66,34 @@ namespace TALabSpaghettiTestsKapatsevichTests
             userThree = Constants.USER_THREE;
             browserForTesting = Constants.browserForTesting;
 
-            //configure browser for testing
-            driverFactory = new WebDriverFactory();
-            driverFactory.SetDriver(browserForTesting);
-            driver = WebDriverSingletone.GetDriver();
+            //configure browser for testing(singletone - new test method - new driver)
+            driverFactory = new WebDriverFactory(browserForTesting);
 
-            gmailService = new GmailService(driver);
+
+            //configure browser for testing(singletone - one solution - one driver)
+            //driverFactory = new WebDriverFactory();
+            //driverFactory.SetDriver(browserForTesting);
+            //driver = WebDriverSingletone.GetDriver();
+
+            //gmailService = new GmailService(driver);
         }
         [SetUp]
         public void SetUp()
         {
-            
+            driver = driverFactory.GetDriver();
+            gmailService = new GmailService(driver);            
         }
 
         [TearDown]
         public void TearDown()
         {
-            gmailService.LogOut();
+            driverFactory.CloseDriver();
         }
 
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            WebDriverSingletone.DisposeDriver();
+            //WebDriverSingletone.DisposeDriver();
         }
 
         [Test]        
@@ -94,21 +101,21 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             gmailService.LoginIn(userOne);
 
-            gmailService.WriteAndSendMessage(userTwo.Username, Constants.SPAM_MESSAGE);
+            //gmailService.WriteAndSendMessage(userTwo.Username, Constants.SPAM_MESSAGE);
 
-            gmailService.LogOutAndChangeAccount(userTwo);
+            //gmailService.LogOutAndChangeAccount(userTwo);
 
-            gmailService.MarkMessageAsSpam(userOne.Username);
+            //gmailService.MarkMessageAsSpam(userOne.Username);
 
-            gmailService.LogOutAndChangeAccount(userOne);
+            //gmailService.LogOutAndChangeAccount(userOne);
 
-            gmailService.WriteAndSendMessage(userTwo.Username, Constants.NOT_SPAM_MESSAGE);
+            //gmailService.WriteAndSendMessage(userTwo.Username, Constants.NOT_SPAM_MESSAGE);
 
-            gmailService.LogOutAndChangeAccount(userTwo);
-            
+            //gmailService.LogOutAndChangeAccount(userTwo);
 
-            // assert
-            Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne,Constants.SPAM_MESSAGE));
+
+            ////assert
+            //Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, Constants.SPAM_MESSAGE));
 
         }
 
@@ -117,12 +124,12 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             gmailService.LoginIn(userTwo);
 
-            gmailService.SetRequestForForwardMailToUser(userThree);
-            gmailService.LogOutAndChangeAccount(userThree);
-            gmailService.ConfirmForwardEmailRequset();
-            gmailService.LogOutAndChangeAccount(userTwo);
+            //gmailService.SetRequestForForwardMailToUser(userThree);
+            //gmailService.LogOutAndChangeAccount(userThree);
+            //gmailService.ConfirmForwardEmailRequset();
+            //gmailService.LogOutAndChangeAccount(userTwo);
 
-            gmailService.SetForwardMailToConfirmedUser(userThree);
+            //gmailService.SetForwardMailToConfirmedUser(userThree);
 
             
 

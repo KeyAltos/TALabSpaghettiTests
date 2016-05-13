@@ -35,7 +35,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
                 googleAccountPage.OpenPage();
                 firstLoginFlag = false;
             }
-                
+
             googleAccountPage.EnterLogin(user);
             googleAccountPage.EnterPassword(user);
             
