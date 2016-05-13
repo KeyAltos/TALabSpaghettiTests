@@ -1,0 +1,10 @@
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\TALabSpaghettiTestsKapatsevich.dll
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\TALabSpaghettiTestsKapatsevich.pdb
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\WebDriver.dll
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\WebDriver.Support.dll
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\WebDriver.xml
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\WebDriver.Support.xml
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\obj\Debug\TALabSpaghettiTestsKapatsevich.dll
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\obj\Debug\TALabSpaghettiTestsKapatsevich.pdb
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\chromedriver.exe
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich\bin\Debug\IEDriverServer64.exe

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TALabSpaghettiTestsKapatsevich", "TALabSpaghettiTestsKapatsevich\TALabSpaghettiTestsKapatsevich.csproj", "{EE7EBE1E-869A-4676-A2A8-5D39073D07BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TALabSpaghettiTestsKapatsevichTests", "TALabSpaghettiTestsKapatsevichTests\TALabSpaghettiTestsKapatsevichTests.csproj", "{CEBD11E4-9C8C-46C4-B1B7-4597A18394C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE7EBE1E-869A-4676-A2A8-5D39073D07BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7EBE1E-869A-4676-A2A8-5D39073D07BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7EBE1E-869A-4676-A2A8-5D39073D07BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7EBE1E-869A-4676-A2A8-5D39073D07BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEBD11E4-9C8C-46C4-B1B7-4597A18394C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEBD11E4-9C8C-46C4-B1B7-4597A18394C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEBD11E4-9C8C-46C4-B1B7-4597A18394C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEBD11E4-9C8C-46C4-B1B7-4597A18394C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
