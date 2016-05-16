@@ -57,6 +57,8 @@ namespace TALabSpaghettiTestsKapatsevichTests
         //private IWebDriverFactorySetter driverFactory;
         private IWebDriverFactory driverFactory;
         private WebBrowsers browserForTesting;
+        Message spamMessage;
+        Message notSpamMessage;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -65,6 +67,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
             userTwo = Constants.USER_TWO;
             userThree = Constants.USER_THREE;
             browserForTesting = Constants.browserForTesting;
+            
 
             //configure browser for testing(singletone - new test method - new driver)
             driverFactory = new WebDriverFactory(browserForTesting);
@@ -82,12 +85,12 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             driver = driverFactory.GetDriver();
             gmailService = new GmailService(driver);            
-        }
+        }       
 
         [TearDown]
         public void TearDown()
         {
-            driverFactory.CloseDriver();
+            //driverFactory.CloseDriver();
         }
 
         [TestFixtureTearDown]
@@ -95,31 +98,36 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             //WebDriverSingletone.DisposeDriver();
         }
-
+        [Ignore]
         [Test]        
         public void IsMarkedAsSpamLetterInSpamFolder()
         {
+
             gmailService.LoginIn(userOne);
 
-            //gmailService.WriteAndSendMessage(userTwo.Username, Constants.SPAM_MESSAGE);
-
-            //gmailService.LogOutAndChangeAccount(userTwo);
-
-            //gmailService.MarkMessageAsSpam(userOne.Username);
-
+            //gmailService.ClearSpam();
             //gmailService.LogOutAndChangeAccount(userOne);
 
-            //gmailService.WriteAndSendMessage(userTwo.Username, Constants.NOT_SPAM_MESSAGE);
+            spamMessage = RandomGenerator.GetRandomMessage("Spammarking");
+            gmailService.WriteAndSendMessage(userTwo.Username, spamMessage);
 
-            //gmailService.LogOutAndChangeAccount(userTwo);
+            gmailService.LogOutAndChangeAccount(userTwo);
 
+            gmailService.MarkMessageAsSpam(userOne.Username);
 
-            ////assert
-            //Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, Constants.SPAM_MESSAGE));
+            gmailService.LogOutAndChangeAccount(userOne);
 
-        }
+            notSpamMessage = RandomGenerator.GetRandomMessage("Simple");
+            gmailService.WriteAndSendMessage(userTwo.Username, notSpamMessage);
 
-        [Test]
+            gmailService.LogOutAndChangeAccount(userTwo);
+
+            gmailService.LoginIn(userTwo);
+            //assert
+            Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));          
+            }
+
+        [Test]        
         public void Forward()
         {
             gmailService.LoginIn(userTwo);
@@ -131,7 +139,9 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
             //gmailService.SetForwardMailToConfirmedUser(userThree);
 
-            
+            gmailService.CreateNewFilter(userOne.Username, true, true, true);
+
+
 
 
         }  

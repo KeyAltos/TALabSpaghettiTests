@@ -53,7 +53,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages
             string backgroundColor = element.GetCssValue("backgroundColor");
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("arguments[0].style.backgroundColor='" + "yellow" + "'", element);
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             js.ExecuteScript("arguments[0].style.backgroundColor='" + backgroundColor + "'", element);
         }
             

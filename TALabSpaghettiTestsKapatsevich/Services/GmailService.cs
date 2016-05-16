@@ -53,6 +53,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         #endregion
 
         #region work with messages
+
         public void WriteAndSendMessage(string to, Message message)
         {
             gmailPage.WriteAndSendMessage(to, message.Title, message.Text);
@@ -79,7 +80,27 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         public bool IsMessageFromUserInSpam(User user, Message message)
         {
             gmailPage.GoToSpam();
+
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
+        }
+
+        //correct
+        public void ClearSpam()
+        {
+            gmailPage.GoToSpam();
+
+            try
+            {
+                gmailPage.ClearCurrentFolder();
+            }
+            catch (WebDriverTimeoutException)
+            {
+                
+            }
+            //if (gmailPage.IsAnyMessagesInCurrentFolder())
+            //{
+            //    gmailPage.ClearCurrentFolder();
+            //}
         }
         #endregion
 
@@ -112,6 +133,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         {
             GoToForwardSetting();
             gmailPage.GoToFiltersFromSettings();
+            gmailPage.CreateNewFilter(from, hasAttachments, deleteMessage, markAsImportant);
         }
 
 

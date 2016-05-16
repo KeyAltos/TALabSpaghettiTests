@@ -67,10 +67,18 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         [FindsBy(How = How.XPath, Using = "//input[@type='radio' and @value='1' and @name='sx_em']")]
         private IWebElement forwardEmailCheckbox;
 
+        [FindsBy(How = How.XPath, Using = "//div[@gh='mtb']//span[@role='checkbox']")]
+        private IWebElement checkAllMessagesInFolderCheckbox;
+
+        [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Create a new filter')]")]
+        private IWebElement createNewFilterButton;
+
+
         //[FindsBy(How = How.XPath, Using = "//body//div[@role='navigation']//a")]
         //private IList<IWebElement> setOfNavigationLinks;
 
         #endregion
+
         #endregion
 
         #region ctror
@@ -114,27 +122,47 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         }
         public bool IsMessageFromUserInCurrentFolder(User fromWhoUser, string title)
         {
-            string xPathToUserMessage = "//span[@email]";
+            //string xPathToUserMessage = "//span[@email]";
+            //var a = driver.FindElements(By.XPath(xPathToUserMessage));
+            //foreach (var element in driver.FindElements(By.XPath(Constants.XPATH_LOCATOR_FOR_ALL_MESSAGES_IN_CURRENT_FOLDER)))
+            //{
+            //    var c = element.Displayed;
+            //    var b = element.GetAttribute("email").Contains(fromWhoUser.Username);
+            //    if (element.Displayed && element.GetAttribute("email").Contains(fromWhoUser.Username))
+            //    {                    
+            //        var parentElement = element.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));                    
+            //        var titleElement = parentElement.FindElement(By.XPath("./td/div/div/div/span"));
 
-            var a = driver.FindElements(By.XPath(xPathToUserMessage));
-
-            foreach (var element in driver.FindElements(By.XPath(xPathToUserMessage)))
+            //        //if (String.Equals(titleElement.Text, title))
+            //        if (titleElement.Text.Contains(title))
+            //        {
+            //            HighLightElement(titleElement);
+            //            return true;
+            //        }                    
+            //    }
+            //}
+            var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
+            foreach (var message in tableRowsWithMessages)
             {
-                var c = element.Displayed;
-                var b = element.GetAttribute("email").Contains(fromWhoUser.Username);
-                if (element.Displayed && element.GetAttribute("email").Contains(fromWhoUser.Username))
-                {                    
-                    var parentElement = element.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));                    
-                    var titleElement = parentElement.FindElement(By.XPath("./td/div/div/div/span"));
-                    
-                    if (titleElement.Text.Contains(title))
-                    {
-                        HighLightElement(titleElement);
-                        return true;
-                    }                    
+                var firstCondition = message.FindElement(By.XPath("//span[@email]")).GetAttribute("email").Contains(fromWhoUser.Username);//Reciever equals
+                var secondCondition = message.FindElement(By.XPath("./td/div/div/div/span")).Text.Contains(title);//Title equals
+                if (firstCondition & secondCondition)
+                {
+                    HighLightElement(message);
+                    return true;
                 }
             }
+
             return false;
+        }
+
+        public void ClearCurrentFolder()
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(checkAllMessagesInFolderCheckbox));
+            checkAllMessagesInFolderCheckbox.Click();
+            var clearSpamButton = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_CLEAR_SPAM_BUTTON));
+            wait.Until(ExpectedConditions.ElementToBeClickable(clearSpamButton));
+            clearSpamButton.Click();
         }
 
 
@@ -146,6 +174,27 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             driver.SwitchTo().Window(windowHandleBefore);
 
         }
+
+        public IEnumerable<IWebElement> GetAllMessagesFromCurrentFolder()
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath("//div[@role='main']"))));
+            var messages = driver.FindElements(By.XPath("//div[@role='main']//tr//span[@email]"));            
+            var parentElements = messages.Where(mes => mes.Displayed).Select(mes => mes.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")));
+            
+            return parentElements;
+        }
+
+        //public bool IsAnyMessagesInCurrentFolder()
+        //{
+        //    foreach (var element in driver.FindElements(By.XPath(Constants.XPATH_LOCATOR_FOR_ALL_MESSAGES_IN_CURRENT_FOLDER)))
+        //    {
+        //        if (element.Displayed)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
         #endregion
 
         #region logout
@@ -161,7 +210,14 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void GoToSettings()
         {
+            
             settingsButton.Click();
+            //var settingsMenuItem = driver.FindElement(By.XPath("//div[@role='menu']//div[contains(text(), 'Settings')]"));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(settingsMenuItem));
+            //HighLightElement(settingsMenuItem);
+
+            //settingsMenuItem.FindElement(By.XPath("..")).Click();
+
             var currentUrl = driver.Url;
             var settingURL = currentUrl.Remove(currentUrl.Length - "index".Length).Insert(currentUrl.Length - "index".Length, "settings/general");
             driver.Navigate().GoToUrl(settingURL);
@@ -184,12 +240,45 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         public void SetForwardMailToConfirmedUser(User user)
         {            
             wait.Until(ExpectedConditions.ElementToBeClickable(forwardEmailCheckbox));
-            forwardEmailCheckbox.Click();  
+            forwardEmailCheckbox.Click();
+
+            var saveForwardingChangesButtons = driver.FindElements(By.XPath(Constants.XPATH_LOCATOR_FOR_FORWARDING_SETTINGS_SAVE_CHANGES_BUTTONS)).Where(tr=>tr.Displayed);
+            var submitButton = saveForwardingChangesButtons.First();
+            wait.Until(ExpectedConditions.ElementToBeClickable(submitButton));
+            submitButton.Click();
         }
 
         public void GoToFiltersFromSettings()
         {
             filtersCatButton.Click();
+        }
+
+        public void CreateNewFilter(string from, bool hasAttachments, bool deleteMessage, bool markAsImportant)
+        {
+            createNewFilterButton.Click();
+
+            GetInputTextByLabelText("From").SendKeys(from);            
+
+            if (hasAttachments)
+            {
+                GetCheckboxByLabelText("Has attachment").Click();
+            }
+
+            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_CREATE_NEW_FILTER_BASED_ON_SEARCH_LINK)).Click();            
+
+
+            if (deleteMessage)
+            {
+                GetCheckboxByLabelText("Delete it").Click();
+            }
+
+            if (markAsImportant)
+            {
+                GetCheckboxByLabelText("Always mark it as important").Click();
+            }
+
+            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_SUBMIT_CREATE_NEW_FILTER_BUTTON)).Click();
+            
         }
         #endregion               
 
@@ -203,6 +292,18 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
                     driver.SwitchTo().Window(window).FindElement(By.XPath(buttonXpathLocator)).Click();
                 }
             }
+        }
+
+        private IWebElement GetCheckboxByLabelText(string text)
+        {
+            var element = driver.FindElement(By.XPath("//label[contains(text(),'"+text+ "')]")).FindElement(By.XPath(".."));
+            return element = element.FindElement(By.XPath("./input"));
+        }
+
+        private IWebElement GetInputTextByLabelText(string text)
+        {
+            var element = driver.FindElement(By.XPath("//label[contains(text(),'" + text + "')]")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+            return element = element.FindElement(By.XPath("./span/input"));
         }
         #endregion
     }
