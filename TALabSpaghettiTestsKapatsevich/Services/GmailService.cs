@@ -56,17 +56,31 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
 
         public void WriteAndSendMessage(string to, Message message)
         {
-            gmailPage.WriteAndSendMessage(to, message.Title, message.Text);
+            gmailPage.WriteMessage(to, message.Title, message.Text);
+            gmailPage.SendMessage();
+        }
+
+        public void WriteAndSendMessageWithAttachGDrive(string to, Message message, string fileName)
+        {
+            gmailPage.WriteMessage(to, message.Title, message.Text);
+            gmailPage.AttachFileFromGDrive(fileName);
+            gmailPage.SendMessage();
+            gmailPage.IfAllertIsPresentAcceptWithIt();            
         }
 
         public void OpenLastMessage (string from)
         {
-            gmailPage.OpenMessage(from);
+            gmailPage.OpenLastMessage(from);
         }
 
-        public void MarkMessageAsSpam(string from)
+        public void OpenMessageFromUserWithTitle(string from, Message message)
         {
-            OpenLastMessage(from);
+            gmailPage.OpenMessageFromUserWithTitle(from, message.Title);
+        }
+
+        public void MarkMessageAsSpam(string from, Message message)
+        {
+            gmailPage.OpenMessageFromUserWithTitle(from, message.Title);
             gmailPage.MarkCurrentMessageAsSpam();
         }
 
@@ -79,31 +93,57 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
 
         public bool IsMessageFromUserInSpam(User user, Message message)
         {
-            gmailPage.GoToSpam();
+            gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
 
+        public bool IsMessageFromUserInInbox(User user, Message message)
+        {
+            gmailPage.GoToLabel(Constants.INBOX_FOLDER_LABEL);
+
+            return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
+        }
+
+        public bool IsMessageFromUserIsImportant(User user, Message message)
+        {
+            gmailPage.GoToLabel(Constants.IMPORTANT_FOLDER_LABEL);
+
+            return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
+        }
+
+        public bool IsMessageFromUserIsImportantInTrash(User user, Message message)
+        {
+            gmailPage.GoToLabel(Constants.TRASH_IMPORTANT_LABEL);
+
+            return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
+        }
+
+
         //correct
         public void ClearSpam()
         {
-            gmailPage.GoToSpam();
+            gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);
 
-            try
+            if (gmailPage.GetAllMessagesFromCurrentFolder().Any())
             {
                 gmailPage.ClearCurrentFolder();
             }
-            catch (WebDriverTimeoutException)
-            {
-                
-            }
-            //if (gmailPage.IsAnyMessagesInCurrentFolder())
+            //try
             //{
             //    gmailPage.ClearCurrentFolder();
             //}
+            //catch (WebDriverTimeoutException)
+            //{
+                
+            //}
+            
         }
+
+
         #endregion
 
+        #region work with settings
         public void GoToSettings()
         {
             gmailPage.GoToSettings();
@@ -135,6 +175,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             gmailPage.GoToFiltersFromSettings();
             gmailPage.CreateNewFilter(from, hasAttachments, deleteMessage, markAsImportant);
         }
+        #endregion
 
 
     }

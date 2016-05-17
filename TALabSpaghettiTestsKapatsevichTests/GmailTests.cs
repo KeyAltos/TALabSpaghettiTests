@@ -98,7 +98,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
             //WebDriverSingletone.DisposeDriver();
         }
-        [Ignore]
+        
         [Test]        
         public void IsMarkedAsSpamLetterInSpamFolder()
         {
@@ -113,7 +113,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
             gmailService.LogOutAndChangeAccount(userTwo);
 
-            gmailService.MarkMessageAsSpam(userOne.Username);
+            gmailService.MarkMessageAsSpam(userOne.Username, spamMessage);
 
             gmailService.LogOutAndChangeAccount(userOne);
 
@@ -127,24 +127,46 @@ namespace TALabSpaghettiTestsKapatsevichTests
             Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));          
             }
 
+        [Ignore]
         [Test]        
         public void Forward()
         {
             gmailService.LoginIn(userTwo);
-
-            //gmailService.SetRequestForForwardMailToUser(userThree);
-            //gmailService.LogOutAndChangeAccount(userThree);
-            //gmailService.ConfirmForwardEmailRequset();
-            //gmailService.LogOutAndChangeAccount(userTwo);
-
-            //gmailService.SetForwardMailToConfirmedUser(userThree);
-
+            gmailService.SetRequestForForwardMailToUser(userThree);
+            gmailService.LogOutAndChangeAccount(userThree);
+            gmailService.ConfirmForwardEmailRequset();
+            gmailService.LogOutAndChangeAccount(userTwo);
+            gmailService.SetForwardMailToConfirmedUser(userThree);
             gmailService.CreateNewFilter(userOne.Username, true, true, true);
 
+            //gmailService.LoginIn(userOne);
+            gmailService.LogOutAndChangeAccount(userOne);
+            var messageWithAttach = RandomGenerator.GetRandomMessage("Attached ");
+            messageWithAttach.Text = "";
+            gmailService.WriteAndSendMessageWithAttachGDrive(userTwo.Username, messageWithAttach, Constants.FILE_NAME_FOR_GDRIVE_ATTACH_NORMALY_SIZE);
+
+            var messageWithoutAttach = RandomGenerator.GetRandomMessage("Not attached ");
+            gmailService.WriteAndSendMessage(userTwo.Username, messageWithoutAttach);
+
+            gmailService.LogOutAndChangeAccount(userTwo);
+
+            //17            
+            Assert.IsTrue(gmailService.IsMessageFromUserIsImportantInTrash(userOne, messageWithAttach));
+            //18.1
+            Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, messageWithoutAttach));
+            //18.2   Bug in gmail fiters - mark is important all input messages
+            //Assert.IsFalse(gmailService.IsMessageFromUserIsImportant(userOne, messageWithoutAttach));
+
+            gmailService.LogOutAndChangeAccount(userThree);
+            Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, messageWithoutAttach));
 
 
 
-        }  
+
+
+
+
+        }
     }
 
 }

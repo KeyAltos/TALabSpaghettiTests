@@ -34,7 +34,6 @@ namespace TALabSpaghettiTestsKapatsevich.Utilities
             {
                 Title = GetRandomMessageTitle(keyWord),
                 Text = keyWord + @" message text.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus, risus id blandit interdum, urna sem pretium nunc, sit amet mollis sapien sapien id est. Etiam porta ipsum faucibus, pellentesque sem a, faucibus nisl. Vivamus mattis nulla ut cursus semper. Aliquam feugiat nulla ligula, ut pulvinar lorem elementum non. Nunc eget magna tempor, gravida elit ullamcorper, dignissim est. Donec sit amet lorem ut sapien aliquam varius. Quisque in metus dictum, pharetra sem nec, lacinia urna. Integer id enim eget elit dapibus dapibus. Phasellus sed sem ut enim blandit pharetra vitae non ligula. Cras egestas erat libero, vitae lacinia lacus sodales eu.
                 Mauris ante tellus, posuere quis laoreet elementum, aliquet vel nisl. Sed id erat euismod, tempor lorem et, tincidunt justo. Duis quis lacinia libero, vitae laoreet tellus. Phasellus malesuada egestas dui, eu commodo nunc finibus at. In interdum in nibh viverra pretium. Nunc at nibh in enim ornare accumsan. Donec in lorem nec erat accumsan maximus quis at metus. Suspendisse aliquet fermentum tincidunt."
             };
         }

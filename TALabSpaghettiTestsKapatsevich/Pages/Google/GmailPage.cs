@@ -23,13 +23,13 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         private IWebElement writeLetterButton;
 
         [FindsBy(How = How.XPath, Using = "//textarea[@name='to']")]
-        private IWebElement inputTo;
+        private IWebElement inputMessageTo;
 
         [FindsBy(How = How.XPath, Using = "//input[@name='subjectbox']")]
-        private IWebElement inputTitle;
+        private IWebElement inputMessageTitle;
 
         [FindsBy(How = How.XPath, Using = "//table//table//table//div[contains(@class, 'editable')]")]
-        private IWebElement inputText;
+        private IWebElement inputMessageText;
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@aria-label, 'Ctrl') and contains(@aria-label, 'Enter')]")]
         private IWebElement sendLetterButon;
@@ -91,16 +91,30 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         #endregion
 
         #region work with messages
-        public void WriteAndSendMessage(string to, string title, string text)
+        public void WriteMessage(string to, string title, string text)
         {
             writeLetterButton.Click();
-            inputTo.SendKeys(to);
-            inputTitle.SendKeys(title);
-            inputText.SendKeys(text);
+            inputMessageTo.SendKeys(to);
+            inputMessageTitle.SendKeys(title);
+            inputMessageText.SendKeys(text);
+        }
+
+        public void AttachFileFromGDrive(string fileName)
+        {
+            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_FILE_FROM_GDRIVE_BUTTON)).Click();            
+            var currentFrame = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_IFRAME)); 
+            driver.SwitchTo().Frame(currentFrame.GetAttribute("name")).FindElement(By.XPath("//div[@aria-label='" + fileName + "']")).Click();
+
+            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR)).Click();
+            driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON)).Click();
+            driver.SwitchTo().DefaultContent();
+        }
+        public void SendMessage()
+        {
             sendLetterButon.Click();
         }
 
-        public void OpenMessage(string from)
+        public void OpenLastMessage(string from)
         {
             string xPathToUserMessage = "//span[contains(@email, '" + from + "')]";
             var message = driver.FindElement(By.XPath(xPathToUserMessage));
@@ -108,52 +122,63 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             message.Click();
         }
 
+        public IWebElement GetMessageFromUserWithTitleFromCurrentFoldder(string from, string title)
+        {
+            var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
+            foreach (var message in tableRowsWithMessages)
+            {
+                var firstCondition = message.FindElement(By.XPath("//span[@email]")).GetAttribute("email").Contains(from);//Reciever equals
+                var secondCondition = message.FindElement(By.XPath("./td/div/div/div/span")).Text.Contains(title);//Title equals
+                if (firstCondition & secondCondition)
+                {
+                    HighLightElement(message);
+                    return message;
+                }
+            }
+
+            return null;
+        }
+
+        public void OpenMessageFromUserWithTitle(string from, string title)
+        {
+            GetMessageFromUserWithTitleFromCurrentFoldder(from, title).Click();
+        }
+
         public void MarkCurrentMessageAsSpam()
         {
             var spamButton = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_SPAM_BUTTON));
             wait.Until(ExpectedConditions.ElementToBeClickable(spamButton));
             spamButton.Click();
-        }
 
-        public void GoToSpam()
-        {
-            searchInGmailField.SendKeys("in: spam");
-            searchInGmailButton.Click();
         }
+        
+        public void GoToLabel(string label)
+        {
+            var currentURL = driver.Url;
+            searchInGmailField.Clear();
+            searchInGmailField.SendKeys(label);
+            searchInGmailButton.Click();            
+            wait.Until<bool>(driver => !String.Equals(driver.Url, currentURL));            
+        }  
+        
+
         public bool IsMessageFromUserInCurrentFolder(User fromWhoUser, string title)
-        {
-            //string xPathToUserMessage = "//span[@email]";
-            //var a = driver.FindElements(By.XPath(xPathToUserMessage));
-            //foreach (var element in driver.FindElements(By.XPath(Constants.XPATH_LOCATOR_FOR_ALL_MESSAGES_IN_CURRENT_FOLDER)))
+        {            
+            //var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
+            //foreach (var message in tableRowsWithMessages)
             //{
-            //    var c = element.Displayed;
-            //    var b = element.GetAttribute("email").Contains(fromWhoUser.Username);
-            //    if (element.Displayed && element.GetAttribute("email").Contains(fromWhoUser.Username))
-            //    {                    
-            //        var parentElement = element.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));                    
-            //        var titleElement = parentElement.FindElement(By.XPath("./td/div/div/div/span"));
-
-            //        //if (String.Equals(titleElement.Text, title))
-            //        if (titleElement.Text.Contains(title))
-            //        {
-            //            HighLightElement(titleElement);
-            //            return true;
-            //        }                    
+            //    var firstCondition = message.FindElement(By.XPath("//span[@email]")).GetAttribute("email").Contains(fromWhoUser.Username);//Reciever equals
+            //    var secondCondition = message.FindElement(By.XPath("./td/div/div/div/span")).Text.Contains(title);//Title equals
+            //    if (firstCondition & secondCondition)
+            //    {
+            //        HighLightElement(message);
+            //        return true;
             //    }
             //}
-            var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
-            foreach (var message in tableRowsWithMessages)
-            {
-                var firstCondition = message.FindElement(By.XPath("//span[@email]")).GetAttribute("email").Contains(fromWhoUser.Username);//Reciever equals
-                var secondCondition = message.FindElement(By.XPath("./td/div/div/div/span")).Text.Contains(title);//Title equals
-                if (firstCondition & secondCondition)
-                {
-                    HighLightElement(message);
-                    return true;
-                }
-            }
 
-            return false;
+            //return false;
+
+            return GetMessageFromUserWithTitleFromCurrentFoldder(fromWhoUser.Username, title) == null ? false: true;
         }
 
         public void ClearCurrentFolder()
@@ -177,7 +202,6 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public IEnumerable<IWebElement> GetAllMessagesFromCurrentFolder()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath("//div[@role='main']"))));
             var messages = driver.FindElements(By.XPath("//div[@role='main']//tr//span[@email]"));            
             var parentElements = messages.Where(mes => mes.Displayed).Select(mes => mes.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")));
             
@@ -282,7 +306,8 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         }
         #endregion               
 
-        #region private methods
+        #region private methods    
+
         private void SubmitButtonInNewWindow(string buttonXpathLocator)
         {
             foreach (var window in driver.WindowHandles)
