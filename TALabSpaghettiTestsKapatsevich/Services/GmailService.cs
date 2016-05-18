@@ -172,6 +172,12 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             gmailPage.GoToFiltersFromSettings();
             gmailPage.ClearFilters();
         }
+
+        public void ClearForwarding()
+        {
+            GoToForwardSetting();
+            gmailPage.ClearForwardingSettings();
+        }
         #endregion
 
 

@@ -50,6 +50,7 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
         public static readonly string XPATH_LOCATOR_FOR_CREATE_NEW_FILTER_BASED_ON_SEARCH_LINK = "//div[contains(text(), 'Create filter with this search')]";
         public static readonly string XPATH_LOCATOR_FOR_SUBMIT_CREATE_NEW_FILTER_BUTTON = "//div[contains(text(), 'Create filter')]";
         public static readonly string FILE_NAME_FOR_GDRIVE_ATTACH_NORMALY_SIZE = "5MB.test";
+        public static readonly string SUBMIT_CLEAR_SETTING_BUTTON = "//button[@name='ok']";
         #endregion
 
         #region Attach file to message from GDrive

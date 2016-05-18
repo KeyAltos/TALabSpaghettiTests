@@ -99,8 +99,12 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_FILE_FROM_GDRIVE_BUTTON)).Click();            
             var currentFrame = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_IFRAME)); 
             driver.SwitchTo().Frame(currentFrame.GetAttribute("name")).FindElement(By.XPath("//div[@aria-label='" + fileName + "']")).Click();
-
+            
+            //COREEEEEEEEEEEEEEEEEEEEEEEEEEEECCCCCCCCCCCCCCCCCCCCTTTTTTTTTTTTTTTTT
+            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR))));
             driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR)).Click();
+
+            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON))));
             driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON)).Click();
             driver.SwitchTo().DefaultContent();
         }
@@ -197,7 +201,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         #region logout
         public void LogOut()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(manageAccountsButton));
+            wait.Until(ExpectedConditions.ElementToBeClickable(manageAccountsButton));            
             manageAccountsButton.Click();
             logOutButton.Click();
         }
@@ -293,10 +297,28 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
                 var deleteFilterButton = driver.FindElement(By.XPath("//button[@class='qR' and contains(text(), 'Delete')]"));
                 wait.Until(ExpectedConditions.ElementToBeClickable(deleteFilterButton));
                 deleteFilterButton.Click();
-                driver.FindElement(By.XPath("//button[@name='ok']")).Click();
+                driver.FindElement(By.XPath(Constants.SUBMIT_CLEAR_SETTING_BUTTON)).Click();
                 wait.Until(ExpectedConditions.ElementToBeClickable(searchInGmailField));
 
             }     
+        }
+
+        public void ClearForwardingSettings()
+        {
+            var isEmailsInForwardingFlag = driver.FindElements(By.XPath("//span[contains(text(),'Forward a copy of incoming mail to')]")).Where(elm => elm.Displayed);
+            if (isEmailsInForwardingFlag.Any())
+            {
+                var emailsDropdown = new SelectElement(isEmailsInForwardingFlag.FirstOrDefault().FindElement(By.XPath("./select")));                
+                var emailsForRemoving = emailsDropdown.Options.Where(opt => opt.Text.Contains("Remove"));
+                foreach (var email in emailsForRemoving)
+                {
+                    emailsDropdown.SelectByValue(email.GetAttribute("value"));
+                    driver.FindElement(By.XPath(Constants.SUBMIT_CLEAR_SETTING_BUTTON)).Click();
+                    wait.Until(ExpectedConditions.ElementToBeClickable(searchInGmailField));
+                    driver.Navigate().Refresh();
+                }
+            }
+            
         }
         #endregion               
 
