@@ -80,6 +80,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
 
         public void MarkMessageAsSpam(string from, Message message)
         {
+            gmailPage.GoToLabel(Constants.INBOX_FOLDER_LABEL);
             gmailPage.OpenMessageFromUserWithTitle(from, message.Title);
             gmailPage.MarkCurrentMessageAsSpam();
         }
@@ -118,9 +119,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
-
-
-        //correct
+        
         public void ClearSpam()
         {
             gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);
@@ -129,16 +128,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             {
                 gmailPage.ClearCurrentFolder();
             }
-            //try
-            //{
-            //    gmailPage.ClearCurrentFolder();
-            //}
-            //catch (WebDriverTimeoutException)
-            //{
-                
-            //}
-            
-        }
+                    }
 
 
         #endregion
@@ -169,11 +159,18 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             
         }
 
-        public void CreateNewFilter(string from, bool hasAttachments, bool deleteMessage, bool markAsImportant)
+        public void CreateNewFilter(string from, bool hasAttachments, bool deleteMessage, bool markAsImportant, bool neverSendToSpam)
         {
             GoToForwardSetting();
             gmailPage.GoToFiltersFromSettings();
-            gmailPage.CreateNewFilter(from, hasAttachments, deleteMessage, markAsImportant);
+            gmailPage.CreateNewFilter(from, hasAttachments, deleteMessage, markAsImportant, neverSendToSpam);
+        }
+
+        public void ClearFilters()
+        {
+            GoToForwardSetting();
+            gmailPage.GoToFiltersFromSettings();
+            gmailPage.ClearFilters();
         }
         #endregion
 

@@ -29,21 +29,6 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
             Password = "nibumbum"
         };
 
-        public static readonly Message SPAM_MESSAGE = new Message()
-        {
-            Title = "Message for spammarking №",
-            Text = @"Spam message text.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae orci nec orci dapibus porttitor non id est. Aenean sodales lacinia scelerisque. Vestibulum cursus hendrerit magna, ut gravida nulla pharetra eget. Aliquam lacinia pulvinar metus, vel blandit lectus varius eu. Donec feugiat tellus id dolor ultricies tincidunt. Maecenas et odio erat. Phasellus id gravida nisi. Sed ornare nec augue quis malesuada."
-        };
-
-        public static readonly Message NOT_SPAM_MESSAGE = new Message()
-        {
-            Title = "Simple message №",
-            Text = @"Not spam message text.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae orci nec orci dapibus porttitor non id est. Aenean sodales lacinia scelerisque. Vestibulum cursus hendrerit magna, ut gravida nulla pharetra eget. Aliquam lacinia pulvinar metus, vel blandit lectus varius eu. Donec feugiat tellus id dolor ultricies tincidunt. Maecenas et odio erat. Phasellus id gravida nisi. Sed ornare nec augue quis malesuada."
-        };
-
-
         public static readonly TimeSpan WAITING_TIME = new TimeSpan(0, 0, 10);
         public static readonly string XPATH_LOCATOR_FOR_ALL_MESSAGES_IN_CURRENT_FOLDER = "//span[@email]";
         #region folder labels
@@ -58,7 +43,7 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
         public static readonly string XPATH_LOCATOR_FOR_CLEAR_SPAM_BUTTON = "//div[@gh='mtb']//div[@act='10']";
         #endregion
 
-        #region Forward
+        #region Settings
         public static readonly string XPATH_LOCATOR_FOR_SUBMIT_BUTTON_IN_NEW_WINDOW = "//input[@type='submit']";
         public static readonly string GOOGLE_NOREPLY_EMAIL = "forwarding-noreply@google.com";
         public static readonly string XPATH_LOCATOR_FOR_FORWARDING_SETTINGS_SAVE_CHANGES_BUTTONS = "//div[@role='main']//tr[@guidedhelpid='save_changes_row']//button[@guidedhelpid]";

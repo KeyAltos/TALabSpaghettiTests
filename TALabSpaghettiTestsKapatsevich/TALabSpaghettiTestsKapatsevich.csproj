@@ -53,6 +53,7 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Constants\Message.cs" />
     <Compile Include="Constants\User.cs" />
+    <Compile Include="Extections\Extention.cs" />
     <Compile Include="Services\GmailService.cs" />
     <Compile Include="Pages\Google\GmailPage.cs" />
     <Compile Include="Pages\Google\GoogleAccountPage.cs" />

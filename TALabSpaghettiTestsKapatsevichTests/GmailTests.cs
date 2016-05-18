@@ -102,13 +102,18 @@ namespace TALabSpaghettiTestsKapatsevichTests
         [Test]        
         public void IsMarkedAsSpamLetterInSpamFolder()
         {
+            //preconditions
+            gmailService.LoginIn(userTwo);
+            gmailService.ClearFilters();
+            bool hasAttachments = false;
+            bool deleteMessage = false;
+            bool markAsImportant = false;
+            bool neverSendToSpam = true;
+            gmailService.CreateNewFilter(userOne.Username, hasAttachments, deleteMessage, markAsImportant, neverSendToSpam);
 
-            gmailService.LoginIn(userOne);
-
-            //gmailService.ClearSpam();
-            //gmailService.LogOutAndChangeAccount(userOne);
-
-            spamMessage = RandomGenerator.GetRandomMessage("Spammarking");
+            //act
+            gmailService.LogOutAndChangeAccount(userOne);
+            spamMessage = RandomGenerator.GetRandomMessage("Spam");
             gmailService.WriteAndSendMessage(userTwo.Username, spamMessage);
 
             gmailService.LogOutAndChangeAccount(userTwo);
@@ -117,15 +122,14 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
             gmailService.LogOutAndChangeAccount(userOne);
 
-            notSpamMessage = RandomGenerator.GetRandomMessage("Simple");
+            notSpamMessage = RandomGenerator.GetRandomMessage("Not spam");
             gmailService.WriteAndSendMessage(userTwo.Username, notSpamMessage);
 
             gmailService.LogOutAndChangeAccount(userTwo);
-
-            gmailService.LoginIn(userTwo);
+            
             //assert
-            Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));          
-            }
+            Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));
+        }
 
         [Ignore]
         [Test]        
@@ -137,7 +141,13 @@ namespace TALabSpaghettiTestsKapatsevichTests
             gmailService.ConfirmForwardEmailRequset();
             gmailService.LogOutAndChangeAccount(userTwo);
             gmailService.SetForwardMailToConfirmedUser(userThree);
-            gmailService.CreateNewFilter(userOne.Username, true, true, true);
+
+            gmailService.ClearFilters();
+            bool hasAttachments = true;
+            bool deleteMessage = true;
+            bool markAsImportant = true;
+            bool neverSendToSpam = false;            
+            gmailService.CreateNewFilter(userOne.Username, hasAttachments, deleteMessage, markAsImportant, neverSendToSpam);
 
             //gmailService.LoginIn(userOne);
             gmailService.LogOutAndChangeAccount(userOne);
@@ -160,9 +170,8 @@ namespace TALabSpaghettiTestsKapatsevichTests
             gmailService.LogOutAndChangeAccount(userThree);
             Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, messageWithoutAttach));
 
-
-
-
+            
+            
 
 
 
