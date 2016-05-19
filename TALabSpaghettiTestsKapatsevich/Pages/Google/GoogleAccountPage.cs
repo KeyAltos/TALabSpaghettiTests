@@ -56,9 +56,9 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             }
             catch (NoSuchElementException)
             {
-                
+
             }
-                     
+
             submitPasswordButton.Submit();
         }
         

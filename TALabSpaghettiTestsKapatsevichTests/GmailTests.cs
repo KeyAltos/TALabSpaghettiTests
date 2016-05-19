@@ -79,7 +79,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
         }
 
-        [Ignore]
+        //[Ignore]
         [Test]        
         public void IsMarkedAsSpamLetterInSpamFolder()
         {
@@ -112,7 +112,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
             Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));
         }
 
-        //[Ignore]
+        [Ignore]
         [Test]        
         public void Forward()
         {
@@ -152,21 +152,17 @@ namespace TALabSpaghettiTestsKapatsevichTests
             //Assert.IsFalse(gmailService.IsMessageFromUserIsImportant(userOne, messageWithoutAttach));
 
             gmailService.LogOutAndChangeAccount(userThree);
-            Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, messageWithoutAttach));
-
-            
-            
-
-
-
+            Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, messageWithoutAttach));            
         }
-        [Ignore]
+        
+        
+        [Ignore]     
         [Test]
         public void NewFeatureTesting()
         {
             gmailService.LoginIn(userTwo);
-            gmailService.ClearForwarding();
-        }
+            gmailService.IsMessageFromUserInInbox(userOne, new Message() { Title = "Spam message title pqg" });
+            }
     }
 
 }

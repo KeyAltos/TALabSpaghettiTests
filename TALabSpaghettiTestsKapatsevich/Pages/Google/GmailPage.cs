@@ -140,14 +140,13 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void OpenMessageFromUserWithTitle(string from, string title)
         {
-            var a = GetMessageFromUserWithTitleFromCurrentFoldder(from, title);
-            a.Click();
+            GetMessageFromUserWithTitleFromCurrentFoldder(from, title).Click();            
         }
 
         public void MarkCurrentMessageAsSpam()
         {
             var spamButton = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_SPAM_BUTTON));
-            wait.Until(ExpectedConditions.ElementToBeClickable(spamButton));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(spamButton));
             spamButton.Click();
 
         }
@@ -201,7 +200,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         #region logout
         public void LogOut()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(manageAccountsButton));            
+            //wait.Until(ExpectedConditions.ElementToBeClickable(manageAccountsButton));            
             manageAccountsButton.Click();
             logOutButton.Click();
         }
@@ -225,7 +224,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void GoToForwardingFromSettings()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(forwardingCatButton));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(forwardingCatButton));
             forwardingCatButton.Click();
         }
 
@@ -295,7 +294,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             {
                 driver.FindElement(By.XPath("//span[@selector='all']")).Click();
                 var deleteFilterButton = driver.FindElement(By.XPath("//button[@class='qR' and contains(text(), 'Delete')]"));
-                wait.Until(ExpectedConditions.ElementToBeClickable(deleteFilterButton));
+                //wait.Until(ExpectedConditions.ElementToBeClickable(deleteFilterButton));
                 deleteFilterButton.Click();
                 driver.FindElement(By.XPath(Constants.SUBMIT_CLEAR_SETTING_BUTTON)).Click();
                 wait.Until(ExpectedConditions.ElementToBeClickable(searchInGmailField));

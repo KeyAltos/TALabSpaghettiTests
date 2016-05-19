@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TALabSpaghettiTestsKapatsevich.WebDriverFactory;
 
 namespace TALabSpaghettiTestsKapatsevich.Pages
 {
@@ -50,11 +52,24 @@ namespace TALabSpaghettiTestsKapatsevich.Pages
 
         public void HighLightElement(IWebElement element)
         {
+            IWebElement elementForLighting;
             string backgroundColor = element.GetCssValue("backgroundColor");
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("arguments[0].style.backgroundColor='" + "yellow" + "'", element);
+
+            //check is element is custom
+            var customElement = element as CustomWebElement;
+            if (customElement!=null)
+            {
+                elementForLighting = customElement.WrappedElement;
+            }
+            else
+            {
+                elementForLighting = element;
+            }
+
+            js.ExecuteScript("arguments[0].style.backgroundColor='" + "yellow" + "'", elementForLighting);
             Thread.Sleep(1000);
-            js.ExecuteScript("arguments[0].style.backgroundColor='" + backgroundColor + "'", element);
+            js.ExecuteScript("arguments[0].style.backgroundColor='" + backgroundColor + "'", elementForLighting);
         }
             
 

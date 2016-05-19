@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TALabSpaghettiTestsKapatsevich.TestsConstants;
 using TALabSpaghettiTestsKapatsevich.Pages.Google;
-using TALabSpaghettiTestsKapatsevich.TestsConstants;
 
 namespace TALabSpaghettiTestsKapatsevich.GmailActions
 {
@@ -15,7 +14,6 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         private IWebDriver driver;
         private GmailPage gmailPage;
         private GoogleAccountPage googleAccountPage;
-        private GoogleStartPage googleStartPage;
         private bool firstLoginFlag;
 
         public GmailService(IWebDriver driver)
@@ -23,7 +21,6 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             this.driver = driver;
             gmailPage = new GmailPage(driver);
             googleAccountPage = new GoogleAccountPage(driver);
-            googleStartPage = new GoogleStartPage(driver);
             firstLoginFlag = true;
         }
 

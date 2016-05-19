@@ -48,8 +48,12 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             if (driver == null)
             {
                 SetDriver(this.browserType);
-            } 
-            return driver;
+            }
+            //return driver;
+
+
+            ////testing customDriver
+            return new CustomWebDriver(driver);
         }
 
         public void CloseDriver()
