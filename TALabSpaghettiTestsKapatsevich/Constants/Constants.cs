@@ -38,6 +38,7 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
         public static readonly string TRASH_FOLDER_LABEL = "in:trash" ;
         public static readonly string TRASH_IMPORTANT_LABEL = "is:important in:trash ";
         #endregion
+
         #region Spam        
         public static readonly string XPATH_LOCATOR_FOR_SPAM_BUTTON = "//div[@gh='mtb']//div[@act='9']";
         public static readonly string XPATH_LOCATOR_FOR_CLEAR_SPAM_BUTTON = "//div[@gh='mtb']//div[@act='10']";

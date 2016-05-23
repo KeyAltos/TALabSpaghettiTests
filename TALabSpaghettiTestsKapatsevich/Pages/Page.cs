@@ -21,7 +21,8 @@ namespace TALabSpaghettiTestsKapatsevich.Pages
         public Page(IWebDriver driver)
         {
             this.driver = driver;
-            PageFactory.InitElements(driver, this);            
+            PageFactory.InitElements(driver, this);   
+                    
         }
 
         public void OpenPage()

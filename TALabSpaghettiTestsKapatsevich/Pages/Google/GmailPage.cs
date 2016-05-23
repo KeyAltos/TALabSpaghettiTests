@@ -52,6 +52,10 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         [FindsBy(How = How.XPath, Using = "//div[@gh='s']/div")]
         private IWebElement settingsButton;
 
+        [FindsBy(How = How.XPath, Using = "//div[@role='menu']//div[contains(text(), 'Settings')]")]
+        private IWebElement settingsMenuItem;
+        
+
         [FindsBy(How = How.XPath, Using = "//a[contains(@href, 'settings/fwdandpop')]")]
         private IWebElement forwardingCatButton;
 
@@ -88,7 +92,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         #region work with messages
         public void WriteMessage(string to, string title, string text)
         {
-            writeLetterButton.Click();
+            writeLetterButton.Click();            
             inputMessageTo.SendKeys(to);
             inputMessageTitle.SendKeys(title);
             inputMessageText.SendKeys(text);
@@ -101,10 +105,10 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             driver.SwitchTo().Frame(currentFrame.GetAttribute("name")).FindElement(By.XPath("//div[@aria-label='" + fileName + "']")).Click();
             
             //COREEEEEEEEEEEEEEEEEEEEEEEEEEEECCCCCCCCCCCCCCCCCCCCTTTTTTTTTTTTTTTTT
-            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR))));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR))));
             driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR)).Click();
 
-            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON))));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON))));
             driver.FindElement(By.Id(Constants.ID_LOCATOR_FOR_INSERT_FILE_BUTTON)).Click();
             driver.SwitchTo().DefaultContent();
         }
@@ -117,7 +121,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         {
             string xPathToUserMessage = "//span[contains(@email, '" + from + "')]";
             var message = driver.FindElement(By.XPath(xPathToUserMessage));
-            wait.Until(ExpectedConditions.ElementToBeClickable(message));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(message));
             message.Click();
         }
 
@@ -169,10 +173,10 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void ClearCurrentFolder()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(checkAllMessagesInFolderCheckbox));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(checkAllMessagesInFolderCheckbox));
             checkAllMessagesInFolderCheckbox.Click();
             var clearSpamButton = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_CLEAR_SPAM_BUTTON));
-            wait.Until(ExpectedConditions.ElementToBeClickable(clearSpamButton));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(clearSpamButton));
             clearSpamButton.Click();
         }
 
@@ -181,6 +185,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         {
             confirmRequestLink.Click();
             SubmitButtonInNewWindow(Constants.XPATH_LOCATOR_FOR_SUBMIT_BUTTON_IN_NEW_WINDOW);            
+            wait.Until(ExpectedConditions.TextToBePresentInElement(driver.FindElement(By.XPath("//td[@class='bubble']")), "Confirmation Success!"));         
             driver.Close();
             driver.SwitchTo().Window(windowHandleBefore);
 
@@ -208,18 +213,27 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         #region work with settings
 
-        public void GoToSettings()
+        public void GoToSettings()            
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(settingsButton));            
-            //var settingsMenuItem = driver.FindElement(By.XPath("//div[@role='menu']//div[contains(text(), 'Settings')]"));
-            //wait.Until(ExpectedConditions.ElementToBeClickable(settingsMenuItem));
-            //HighLightElement(settingsMenuItem);
 
-            //settingsMenuItem.FindElement(By.XPath("..")).Click();
+            try
+            {
+                new Actions(driver).ClickAndHold(settingsButton).MoveToElement(settingsMenuItem).Release().Perform();
+            }
+            catch (Exception)
+            {
+                wait.Until(ExpectedConditions.ElementToBeClickable(settingsButton));
+                var currentUrl = driver.Url;
+                var settingURL = currentUrl.Remove(currentUrl.Length - "index".Length).Insert(currentUrl.Length - "index".Length, "settings/general");
+                driver.Navigate().GoToUrl(settingURL);
+            }
 
-            var currentUrl = driver.Url;
-            var settingURL = currentUrl.Remove(currentUrl.Length - "index".Length).Insert(currentUrl.Length - "index".Length, "settings/general");
-            driver.Navigate().GoToUrl(settingURL);
+
+            //normaly worked
+            //wait.Until(ExpectedConditions.ElementToBeClickable(settingsButton));
+            //var currentUrl = driver.Url;
+            //var settingURL = currentUrl.Remove(currentUrl.Length - "index".Length).Insert(currentUrl.Length - "index".Length, "settings/general");
+            //driver.Navigate().GoToUrl(settingURL);
         }
 
         public void GoToForwardingFromSettings()
@@ -239,12 +253,12 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void SetForwardMailToConfirmedUser(User user)
         {            
-            wait.Until(ExpectedConditions.ElementToBeClickable(forwardEmailCheckbox));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(forwardEmailCheckbox));
             forwardEmailCheckbox.Click();
 
             var saveForwardingChangesButtons = driver.FindElements(By.XPath(Constants.XPATH_LOCATOR_FOR_FORWARDING_SETTINGS_SAVE_CHANGES_BUTTONS)).Where(tr=>tr.Displayed);
             var submitButton = saveForwardingChangesButtons.First();
-            wait.Until(ExpectedConditions.ElementToBeClickable(submitButton));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(submitButton));
             submitButton.Click();
 
         }
@@ -329,7 +343,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             {
                 if (!String.Equals(windowHandleBefore, window))
                 {
-                    driver.SwitchTo().Window(window).FindElement(By.XPath(buttonXpathLocator)).Click();
+                    driver.SwitchTo().Window(window).FindElement(By.XPath(buttonXpathLocator)).Submit();
                 }
             }
         }

@@ -8,14 +8,18 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Internal;
+using OpenQA.Selenium.Interactions.Internal;
 
 namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 {
-    public class CustomWebElement : IWebElement
+    public class CustomWebElement : IWebElement, IWrapsElement, ILocatable
     {
         private IWebElement baseWebElement;
         private WebDriverWait wait;
-
+        private IWebDriver driver;
+        private Actions actions ;
         public RemoteWebElement WrappedElement
         {
             get
@@ -25,10 +29,12 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 
         }
 
-        public CustomWebElement(IWebElement baseWebElement, WebDriverWait wait)
+        public CustomWebElement(IWebElement baseWebElement, WebDriverWait wait, IWebDriver driver)
         {
             this.baseWebElement = baseWebElement;
             this.wait = wait;
+            this.driver = driver;
+            this.actions = new Actions(driver);
         }
 
         public bool Displayed
@@ -87,6 +93,30 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             }
         }
 
+        IWebElement IWrapsElement.WrappedElement
+        {
+            get
+            {
+                return baseWebElement;
+            }
+        }
+
+        Point ILocatable.LocationOnScreenOnceScrolledIntoView
+        {
+            get
+            {
+                return ((ILocatable)baseWebElement).LocationOnScreenOnceScrolledIntoView;
+            }
+        }
+
+        ICoordinates ILocatable.Coordinates
+        {
+            get
+            {
+                return ((ILocatable)baseWebElement).Coordinates;
+            }
+        }
+
         public void Clear()
         {
             WaitForElementToBeClickable();
@@ -95,14 +125,19 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 
         public void Click()
         {
-            WaitForElementToBeClickable();
-            baseWebElement.Click();
+
+            WaitForElementToBeClickable(); 
+
+            actions.MoveToElement(baseWebElement).Click().Build().Perform();  
+            
+                     
+            //baseWebElement.Click();
         }
 
         public IWebElement FindElement(By by)
         {
             var baseElement = baseWebElement.FindElement(by);
-            var customElement = new CustomWebElement(baseElement, wait);
+            var customElement = new CustomWebElement(baseElement, wait, driver);
             return customElement;
         }
 
@@ -112,7 +147,7 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             var customElements = new List<IWebElement>();
             foreach (var element in baseElements)
             {
-                customElements.Add(new CustomWebElement(element, wait));
+                customElements.Add(new CustomWebElement(element, wait, driver));
             }
             return new ReadOnlyCollection<IWebElement>(customElements);
         }
@@ -140,7 +175,19 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 
         private void WaitForElementToBeClickable()
         {
+            //wait.Until<bool>(drv => baseWebElement.IsClickable());  
+            //wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy()            
+            //actions.moveToElement(element).click().perform();
+
+            //actions.MoveToElement(baseWebElement);
+            
+            //jse.ExecuteScript("arguments[0].scrollIntoView()", baseWebElement);
+
+
             wait.Until(ExpectedConditions.ElementToBeClickable(baseWebElement));
+
+            //IJavaScriptExecutor jse = (IJavaScriptExecutor)driver;
+            //jse.ExecuteScript("scroll(250, 0)");
         }
     }
 }

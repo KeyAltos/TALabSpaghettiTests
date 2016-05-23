@@ -174,6 +174,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         {
             GoToForwardSetting();
             gmailPage.ClearForwardingSettings();
+            gmailPage.IfAllertIsPresentAcceptWithIt();
         }
         #endregion
 

@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Support.UI;
 using TALabSpaghettiTestsKapatsevich.TestsConstants;
+using OpenQA.Selenium.Internal;
 
 namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 {
-    public class CustomWebDriver : IWebDriver, IJavaScriptExecutor
+    public class CustomWebDriver : IWebDriver, IHasInputDevices, IWrapsDriver, IJavaScriptExecutor
     {
         private IWebDriver baseDriver;
         private WebDriverWait wait;
@@ -66,6 +67,30 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             }
         }
 
+        IKeyboard IHasInputDevices.Keyboard
+        {
+            get
+            {
+                return ((IHasInputDevices)baseDriver).Keyboard;
+            }
+        }
+
+        IMouse IHasInputDevices.Mouse
+        {
+            get
+            {
+                return ((IHasInputDevices)baseDriver).Mouse;
+            }
+        }
+
+        IWebDriver IWrapsDriver.WrappedDriver
+        {
+            get
+            {
+                return baseDriver;
+            }
+        }
+
         public void Close()
         {
             baseDriver.Close();
@@ -79,7 +104,7 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
         public IWebElement FindElement(By by)
         {
             var baseElement = baseDriver.FindElement(by);
-            var customElement = new CustomWebElement(baseElement, wait);
+            var customElement = new CustomWebElement(baseElement, wait,baseDriver);
             return customElement;
         }
 
@@ -89,7 +114,7 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             var customElements = new List<IWebElement>();
             foreach (var element in baseElements)
             {
-                customElements.Add(new CustomWebElement(element, wait));
+                customElements.Add(new CustomWebElement(element, wait, baseDriver));
             }
             return new ReadOnlyCollection<IWebElement>(customElements);
         }

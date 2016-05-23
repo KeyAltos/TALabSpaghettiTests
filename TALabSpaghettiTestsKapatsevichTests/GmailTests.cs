@@ -79,8 +79,9 @@ namespace TALabSpaghettiTestsKapatsevichTests
         {
         }
 
-        //[Ignore]
+        [Ignore]
         [Test]        
+        [Repeat(5)]
         public void IsMarkedAsSpamLetterInSpamFolder()
         {
             //preconditions
@@ -112,7 +113,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
             Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));
         }
 
-        [Ignore]
+        //[Ignore]
         [Test]        
         public void Forward()
         {
@@ -161,8 +162,9 @@ namespace TALabSpaghettiTestsKapatsevichTests
         public void NewFeatureTesting()
         {
             gmailService.LoginIn(userTwo);
-            gmailService.IsMessageFromUserInInbox(userOne, new Message() { Title = "Spam message title pqg" });
-            }
+            gmailService.ClearForwarding();
+            
+        }
     }
 
 }

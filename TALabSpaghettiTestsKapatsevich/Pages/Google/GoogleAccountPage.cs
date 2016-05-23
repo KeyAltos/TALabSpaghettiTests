@@ -39,7 +39,8 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void EnterLogin(User user)
         {            
-            inputEmail.SendKeys(user.Username);            
+            inputEmail.SendKeys(user.Username);
+            var a = inputEmail;
             submitEmailButton.Submit();            
         }
 
