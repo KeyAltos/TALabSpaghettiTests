@@ -71,6 +71,8 @@
   <ItemGroup>
     <Compile Include="BaseTestClass.cs" />
     <Compile Include="GmailTests.cs" />
+    <Compile Include="Listeners\Addin.cs" />
+    <Compile Include="Listeners\ExceptionScreenshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

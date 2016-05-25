@@ -45,7 +45,7 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
         public void LogOutAndChangeAccount(User newAccount)
         {
             LogOut();
-            LoginIn(newAccount);            
+            LoginIn(newAccount);
         }
         #endregion
 

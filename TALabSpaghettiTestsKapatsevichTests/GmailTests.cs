@@ -113,7 +113,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
             Assert.IsTrue(gmailService.IsMessageFromUserInSpam(userOne, spamMessage));
         }
 
-        //[Ignore]
+        [Ignore]
         [Test]        
         public void Forward()
         {
@@ -157,13 +157,12 @@ namespace TALabSpaghettiTestsKapatsevichTests
         }
         
         
-        [Ignore]     
+        //[Ignore]     
         [Test]
         public void NewFeatureTesting()
         {
             gmailService.LoginIn(userTwo);
-            gmailService.ClearForwarding();
-            
+            throw new Exception("test screeenshot exception");
         }
     }
 

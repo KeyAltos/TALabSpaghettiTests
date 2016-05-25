@@ -11,7 +11,7 @@ using OpenQA.Selenium.Internal;
 
 namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 {
-    public class CustomWebDriver : IWebDriver, IHasInputDevices, IWrapsDriver, IJavaScriptExecutor
+    public class CustomWebDriver : IWebDriver, IHasInputDevices, IWrapsDriver, IJavaScriptExecutor, ITakesScreenshot
     {
         private IWebDriver baseDriver;
         private WebDriverWait wait;
@@ -147,6 +147,11 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
         object IJavaScriptExecutor.ExecuteScript(string script, params object[] args)
         {
             return ((IJavaScriptExecutor)baseDriver).ExecuteScript(script, args);
+        }
+
+        Screenshot ITakesScreenshot.GetScreenshot()
+        {
+            return ((ITakesScreenshot)baseDriver).GetScreenshot();
         }
     }
 }

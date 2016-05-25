@@ -1,15 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-05-13" time="14:36:39">
+<test-results name="C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-05-25" time="16:38:41">
   <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.4\bin" machine-name="EPBYMINW2457" user="Valery_Kapatsevich" user-domain="MINSK" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll" executed="True" result="Success" success="True" time="92.400" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll" executed="True" result="Failure" success="False" time="16.171" asserts="0">
     <results>
-      <test-suite type="Namespace" name="TALabSpaghettiTestsKapatsevichTests" executed="True" result="Success" success="True" time="92.387" asserts="0">
+      <test-suite type="Namespace" name="TALabSpaghettiTestsKapatsevichTests" executed="True" result="Failure" success="False" time="16.157" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="GmailTests" executed="True" result="Success" success="True" time="92.385" asserts="0">
+          <test-suite type="TestFixture" name="GmailTests" executed="True" result="Failure" success="False" time="16.155" asserts="0">
             <results>
-              <test-case name="TALabSpaghettiTestsKapatsevichTests.GmailTests.IsMarkedAsSpamLetterInSpamFolder" executed="True" result="Success" success="True" time="82.062" asserts="1" />
+              <test-case name="TALabSpaghettiTestsKapatsevichTests.GmailTests.NewFeatureTesting" executed="True" result="Error" success="False" time="4.279" asserts="0">
+                <failure>
+                  <message><![CDATA[System.Exception : test screeenshot exception]]></message>
+                  <stack-trace><![CDATA[at TALabSpaghettiTestsKapatsevichTests.GmailTests.NewFeatureTesting() in C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\GmailTests.cs:line 165
+]]></stack-trace>
+                </failure>
+              </test-case>
             </results>
           </test-suite>
         </results>

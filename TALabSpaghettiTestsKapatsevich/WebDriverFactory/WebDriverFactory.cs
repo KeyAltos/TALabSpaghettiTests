@@ -12,14 +12,17 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
 {
     public class WebDriverFactory: IWebDriverFactory, IWebDriverFactorySetter
     {        
-        private IWebDriver driver;
+        private static IWebDriver driver;
         private WebBrowsers browserType;
 
         public WebDriverFactory() : this(WebBrowsers.FireFox) { }      
 
         public WebDriverFactory(WebBrowsers browserType)
-        {            
-            SetDriver(browserType);
+        {
+            if (driver==null)
+            {
+                SetDriver(browserType);
+            }   
         }
 
         public void SetDriver(WebBrowsers browser)
@@ -41,6 +44,9 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             }
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+
+            ////testing customDriver
+            driver = new CustomWebDriver(driver);
         }
 
         public IWebDriver GetDriver()
@@ -48,12 +54,8 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             if (driver == null)
             {
                 SetDriver(this.browserType);
-            }
-            //return driver;
-
-
-            ////testing customDriver
-            return new CustomWebDriver(driver);
+            }           
+            return driver;
         }
 
         public void CloseDriver()

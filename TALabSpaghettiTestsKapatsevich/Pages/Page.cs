@@ -16,7 +16,6 @@ namespace TALabSpaghettiTestsKapatsevich.Pages
     {
         protected IWebDriver driver;
         protected string url;
-        protected static int screenshotCounter = 0;
 
         public Page(IWebDriver driver)
         {
@@ -72,20 +71,19 @@ namespace TALabSpaghettiTestsKapatsevich.Pages
             Thread.Sleep(1000);
             js.ExecuteScript("arguments[0].style.backgroundColor='" + backgroundColor + "'", elementForLighting);
         }
-            
 
         //public void MakeScreenshot()
         //{
-        //    screenshotCounter++;
         //    Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
         //    string currentDate = DateTime.Now.ToString("G");
         //    currentDate = currentDate.Replace(':', '.').Replace('/', '_');
-        //    string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures).Replace('\\', '/') + "/";
-        //    string screenshotTitle = "Screenshot_#" + screenshotCounter + "_" + url + "_" + currentDate + ".gif";
-        //    screenshotTitle = screenshotTitle.Replace(':', '.').Replace('/', '_');
-        //    string fullPath = folderPath + screenshotTitle;
-        //    image.SaveAsFile(fullPath, ImageFormat.Gif);
 
+        //    string folderPath = Environment.CurrentDirectory.Replace('\\', '/') + "/";
+        //    string screenshotTitle = currentDate + "_" + "screenshot.png";
+        //    screenshotTitle = screenshotTitle.Replace(':', '.').Replace('/', '_');
+
+        //    string fullPath = folderPath + screenshotTitle;
+        //    image.SaveAsFile(fullPath, ImageFormat.Png);
         //}
     }
 }

@@ -95,7 +95,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             writeLetterButton.Click();            
             inputMessageTo.SendKeys(to);
             inputMessageTitle.SendKeys(title);
-            inputMessageText.SendKeys(text);
+            inputMessageText.SendKeys(text);            
         }
 
         public void AttachFileFromGDrive(string fileName)
