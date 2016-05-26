@@ -21,28 +21,28 @@ namespace TALabSpaghettiTestsKapatsevichTests.Listeners
 
         public void RunFinished(Exception exception)
         {
-            Debug.Print("From Unhandled " + exception.Message);
+            Debug.WriteLine("Screenshot Listener: From RunFinished ");
             new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
         }
 
         public void RunFinished(TestResult result)
         {
-            
+            Debug.WriteLine("Screenshot Listener: From RunFinished ");
         }
 
         public void RunStarted(string name, int testCount)
         {
-            
+            Debug.WriteLine("Screenshot Listener: From RunStarted");
         }
 
         public void SuiteFinished(TestResult result)
         {
-            
+            Debug.WriteLine("Screenshot Listener: From SuiteFinished ");
         }
 
         public void SuiteStarted(TestName testName)
         {
-           
+            Debug.WriteLine("Screenshot Listener: From SuiteStarted " + testName.Name);
         }
 
         public void TestFinished(TestResult result)
@@ -52,24 +52,25 @@ namespace TALabSpaghettiTestsKapatsevichTests.Listeners
             result.ResultState == ResultState.Failure;
             if (isFailure)
             {
-                Debug.Print("TestFinished ");
-                new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
+                Debug.WriteLine("Screenshot Listener: From TestFinished: Test failed:");
+                Debug.WriteLine(result.Message);
+                Debug.WriteLine("Screenshot Listener: making screenshot");
+                //new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
             }
         }
 
         public void TestOutput(TestOutput testOutput)
-        {
-            
+        {            
         }
 
         public void TestStarted(TestName testName)
         {
-           
+            Debug.WriteLine("Screenshot Listener: From TestStarted " + testName.Name);
         }
 
         public void UnhandledException(Exception exception)
         {
-            Debug.Print("From Unhandled "+exception.Message);
+            Debug.WriteLine("Screenshot Listener: From Unhandled Exception" + exception.Message);
             new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
         }
     }

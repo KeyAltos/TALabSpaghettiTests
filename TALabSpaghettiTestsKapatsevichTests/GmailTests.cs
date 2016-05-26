@@ -15,6 +15,7 @@ using OpenQA.Selenium.IE;
 using System.Threading;
 using OpenQA.Selenium.Chrome;
 using TALabSpaghettiTestsKapatsevich.Utilities;
+using System.Diagnostics;
 
 namespace TALabSpaghettiTestsKapatsevichTests
 {
@@ -58,7 +59,8 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
-        {           
+        {
+            Debug.WriteLine("GmailTest: FixtureSetUp");
             userOne = Constants.USER_ONE;
             userTwo = Constants.USER_TWO;
             userThree = Constants.USER_THREE;
@@ -66,17 +68,20 @@ namespace TALabSpaghettiTestsKapatsevichTests
         [SetUp]
         public void SetUp()
         {
+            Debug.WriteLine("GmailTest:SetUp");
             gmailService = new GmailService(driver);            
         }       
 
         [TearDown]
         public void TearDown()
         {
+            Debug.WriteLine("GmailTest: TearDown");
         }
 
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
+            Debug.WriteLine("GmailTest: FixtureTearDown");
         }
 
         [Ignore]
@@ -161,7 +166,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
         [Test]
         public void NewFeatureTesting()
         {
-            gmailService.LoginIn(userTwo);
+            gmailService.LoginIn(userTwo);            
             throw new Exception("test screeenshot exception");
         }
     }

@@ -30,6 +30,11 @@ namespace TALabSpaghettiTestsKapatsevich.TestsConstants
         };
 
         public static readonly TimeSpan WAITING_TIME = new TimeSpan(0, 0, 10);
+
+        public static readonly string FOLDER_FOR_SCREENSHOT_PATH = Environment.CurrentDirectory.Replace('\\', '/') + "/";
+
+
+
         public static readonly string XPATH_LOCATOR_FOR_ALL_MESSAGES_IN_CURRENT_FOLDER = "//span[@email]";
         #region folder labels
         public static readonly string SPAM_FOLDER_LABEL = "in: spam";
