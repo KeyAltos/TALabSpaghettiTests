@@ -167,7 +167,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
         public void NewFeatureTesting()
         {
             gmailService.LoginIn(userTwo);            
-            throw new Exception("test screeenshot exception");
+            
         }
     }
 

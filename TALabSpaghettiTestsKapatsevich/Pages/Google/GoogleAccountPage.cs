@@ -40,6 +40,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         public void EnterLogin(User user)
         {            
             inputEmail.SendKeys(user.Username);
+            throw new Exception("test screeenshot exception");
             submitEmailButton.Submit();
         }
 

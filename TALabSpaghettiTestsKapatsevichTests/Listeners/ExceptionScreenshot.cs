@@ -53,8 +53,8 @@ namespace TALabSpaghettiTestsKapatsevichTests.Listeners
             if (isFailure)
             {
                 Debug.WriteLine("Screenshot Listener: From TestFinished: Test failed:");
-                Debug.WriteLine(result.Message);
-                Debug.WriteLine("Screenshot Listener: making screenshot");
+                Debug.WriteLine("Screenshot Listener: From TestFinished: " + result.Message);
+                Debug.WriteLine("Screenshot Listener: From TestFinished: making screenshot");
                 //new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
             }
         }

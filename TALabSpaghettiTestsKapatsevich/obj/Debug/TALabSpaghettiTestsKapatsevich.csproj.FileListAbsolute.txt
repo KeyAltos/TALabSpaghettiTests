@@ -18,3 +18,4 @@ C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\
 C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevich\bin\Debug\WebDriver.Support.xml
 C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevich\obj\Debug\TALabSpaghettiTestsKapatsevich.dll
 C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevich\obj\Debug\TALabSpaghettiTestsKapatsevich.pdb
+C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevich\obj\Debug\TALabSpaghettiTestsKapatsevich.csprojResolveAssemblyReference.cache
