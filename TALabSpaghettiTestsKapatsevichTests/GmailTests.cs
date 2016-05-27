@@ -16,6 +16,7 @@ using System.Threading;
 using OpenQA.Selenium.Chrome;
 using TALabSpaghettiTestsKapatsevich.Utilities;
 using System.Diagnostics;
+using TALabSpaghettiTestsKapatsevichTests.TestExtentions;
 
 namespace TALabSpaghettiTestsKapatsevichTests
 {
@@ -165,9 +166,19 @@ namespace TALabSpaghettiTestsKapatsevichTests
         //[Ignore]     
         [Test]
         public void NewFeatureTesting()
-        {
-            gmailService.LoginIn(userTwo);            
-            
+        {            
+            gmailService.LoginIn(userTwo);
+
+            var group = new GroupAssert();
+
+            group.Add(() => Assert.IsTrue(gmailService.IsMessageFromUserIsImportantInTrash(userOne, new Message() { Title = "Attached tn messagec titlec" }),
+                                        "IsMessageFromUserIsImportantInTrash(userOne)"));
+            group.Add(() => Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, new Message() { Title = "sdgsdgsdgsd" }),
+                                        "IsMessageFromUserInInbox(userOne)"));
+            group.Add(() => Assert.IsFalse(gmailService.IsMessageFromUserIsImportant(userOne, new Message() { Title = "Spam message title nhs" }),
+                                        "IsMessageFromUserIsImportant(userOne)"));
+
+            group.Verify();
         }
     }
 

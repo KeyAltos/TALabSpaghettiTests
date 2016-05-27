@@ -74,6 +74,7 @@
     <Compile Include="Listeners\Addin.cs" />
     <Compile Include="Listeners\ExceptionScreenshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestExtentions\GroupAssert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
