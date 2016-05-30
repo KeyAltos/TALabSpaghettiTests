@@ -54,7 +54,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         [FindsBy(How = How.XPath, Using = "//div[@role='menu']//div[contains(text(), 'Settings')]")]
         private IWebElement settingsMenuItem;
-        
+
 
         [FindsBy(How = How.XPath, Using = "//a[contains(@href, 'settings/fwdandpop')]")]
         private IWebElement forwardingCatButton;
@@ -66,7 +66,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         private IWebElement addEmailForForwardingButton;
 
         [FindsBy(How = How.XPath, Using = "//a[contains(@href, 'mail-settings.google.com/mail/')]")]
-        private IWebElement confirmRequestLink;        
+        private IWebElement confirmRequestLink;
 
         [FindsBy(How = How.XPath, Using = "//input[@type='radio' and @value='1' and @name='sx_em']")]
         private IWebElement forwardEmailCheckbox;
@@ -76,6 +76,10 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Create a new filter')]")]
         private IWebElement createNewFilterButton;
+
+        [FindsBy(How = How.XPath, Using = "//div[@role='main']//tr[@id and @class]")]
+        private IList<IWebElement> messagesFromCurrentFolder;
+
         #endregion
 
         #endregion
@@ -92,18 +96,18 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
         #region work with messages
         public void WriteMessage(string to, string title, string text)
         {
-            writeLetterButton.Click();            
+            writeLetterButton.Click();
             inputMessageTo.SendKeys(to);
             inputMessageTitle.SendKeys(title);
-            inputMessageText.SendKeys(text);            
+            inputMessageText.SendKeys(text);
         }
 
         public void AttachFileFromGDrive(string fileName)
         {
-            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_FILE_FROM_GDRIVE_BUTTON)).Click();            
-            var currentFrame = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_IFRAME)); 
+            driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_FILE_FROM_GDRIVE_BUTTON)).Click();
+            var currentFrame = driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_IFRAME));
             driver.SwitchTo().Frame(currentFrame.GetAttribute("name")).FindElement(By.XPath("//div[@aria-label='" + fileName + "']")).Click();
-            
+
             //COREEEEEEEEEEEEEEEEEEEEEEEEEEEECCCCCCCCCCCCCCCCCCCCTTTTTTTTTTTTTTTTT
             //wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR))));
             driver.FindElement(By.XPath(Constants.XPATH_LOCATOR_FOR_ATTACH_SELECTOR)).Click();
@@ -127,8 +131,9 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public IWebElement GetMessageFromUserWithTitleFromCurrentFoldder(string from, string title)
         {
-            var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
-            foreach (var message in tableRowsWithMessages)
+            //var tableRowsWithMessages = GetAllMessagesFromCurrentFolder();
+            //foreach (var message in tableRowsWithMessages)
+            foreach (var message in messagesFromCurrentFolder)
             {
                 var firstCondition = message.FindElement(By.XPath("//span[@email]")).GetAttribute("email").Contains(from);//Reciever equals
                 var secondCondition = message.FindElement(By.XPath("./td/div/div/div/span")).Text.Contains(title);//Title equals
@@ -144,7 +149,7 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public void OpenMessageFromUserWithTitle(string from, string title)
         {
-            GetMessageFromUserWithTitleFromCurrentFoldder(from, title).Click();            
+            GetMessageFromUserWithTitleFromCurrentFoldder(from, title).Click();
         }
 
         public void MarkCurrentMessageAsSpam()
@@ -154,15 +159,36 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
             spamButton.Click();
 
         }
-        
-        public void GoToLabel(string label)
+
+        public void SearchRequest(string label, string from ="", string title="")
         {
             var currentURL = driver.Url;
+            searchInGmailField.Clear();
+            var searchRequest = new StringBuilder();
+            searchRequest.Append(label);
+            if (!String.Equals(from,""))
+            {
+                searchRequest.Append(" from: " + from);
+            }
+            if (!String.Equals(title, ""))
+            {
+                searchRequest.Append(" " + title);
+            }
+            searchInGmailField.SendKeys(searchRequest.ToString());
+            searchInGmailButton.Click();
+            wait.Until<bool>(driver => !String.Equals(driver.Url, currentURL));
+        }
+
+
+
+        public void GoToLabel(string label)
+        {
+            var currentURL = driver.Url;            
             searchInGmailField.Clear();
             searchInGmailField.SendKeys(label);
             searchInGmailButton.Click();            
             wait.Until<bool>(driver => !String.Equals(driver.Url, currentURL));
-            Thread.Sleep(2000);    /////////CORRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEECCCCCCCCCCCCCCCCCTTTTTTTTTTTTTTTT                
+            //Thread.Sleep(2000);    /////////CORRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEECCCCCCCCCCCCCCCCCTTTTTTTTTTTTTTTT                
         }  
         
 
@@ -193,11 +219,12 @@ namespace TALabSpaghettiTestsKapatsevich.Pages.Google
 
         public IEnumerable<IWebElement> GetAllMessagesFromCurrentFolder()
         {
-            driver.SwitchTo().DefaultContent();            
-            var messages = driver.FindElements(By.XPath("//div[@role='main']//tr//span[@email]"));            
-            var parentElements = messages.Where(mes => mes.Displayed).Select(mes => mes.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")));
-            
-            return parentElements;
+            //driver.SwitchTo().DefaultContent();            
+            //var messages = driver.FindElements(By.XPath("//div[@role='main']//tr//span[@email]"));            
+            //var parentElements = messages.Where(mes => mes.Displayed).Select(mes => mes.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")));
+
+            //return parentElements;
+            return messagesFromCurrentFolder;
         }
         
         #endregion

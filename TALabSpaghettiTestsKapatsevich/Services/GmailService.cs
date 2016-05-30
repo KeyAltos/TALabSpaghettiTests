@@ -88,35 +88,46 @@ namespace TALabSpaghettiTestsKapatsevich.GmailActions
             gmailPage.ConfirmForwardRequestInCurrentMessage();
         }
 
-
+        #region is message in...
         public bool IsMessageFromUserInSpam(User user, Message message)
         {
-            gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);
+            gmailPage.SearchRequest(Constants.SPAM_FOLDER_LABEL, user.Username, message.Title);
+
+
+            //gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
 
         public bool IsMessageFromUserInInbox(User user, Message message)
         {
-            gmailPage.GoToLabel(Constants.INBOX_FOLDER_LABEL);
+            gmailPage.SearchRequest(Constants.INBOX_FOLDER_LABEL, user.Username, message.Title);
+
+            //gmailPage.GoToLabel(Constants.INBOX_FOLDER_LABEL);
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
 
         public bool IsMessageFromUserIsImportant(User user, Message message)
         {
-            gmailPage.GoToLabel(Constants.IMPORTANT_FOLDER_LABEL);
+            gmailPage.SearchRequest(Constants.IMPORTANT_FOLDER_LABEL, user.Username, message.Title);
+
+            //gmailPage.GoToLabel(Constants.IMPORTANT_FOLDER_LABEL);
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
 
         public bool IsMessageFromUserIsImportantInTrash(User user, Message message)
         {
-            gmailPage.GoToLabel(Constants.TRASH_IMPORTANT_LABEL);
+
+            gmailPage.SearchRequest(Constants.TRASH_IMPORTANT_LABEL, user.Username, message.Title);
+
+            //gmailPage.GoToLabel(Constants.TRASH_IMPORTANT_LABEL);
 
             return gmailPage.IsMessageFromUserInCurrentFolder(user, message.Title);
         }
-        
+        #endregion
+
         public void ClearSpam()
         {
             gmailPage.GoToLabel(Constants.SPAM_FOLDER_LABEL);

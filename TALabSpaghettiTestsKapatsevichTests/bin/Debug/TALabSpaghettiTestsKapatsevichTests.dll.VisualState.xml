@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="true">
   <TopNode>[0-1004]C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll</TopNode>
-  <SelectedNode>[0-1001]TALabSpaghettiTestsKapatsevichTests.GmailTests.IsMarkedAsSpamLetterInSpamFolder</SelectedNode>
+  <SelectedNode>[0-1003]TALabSpaghettiTestsKapatsevichTests.GmailTests.NewFeatureTesting</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1004]C:\Users\Valery_Kapatsevich@epam.com\Documents\GitHub\TALab\TALabSpaghettiTests\TALabSpaghettiTestsKapatsevichTests\bin\Debug\TALabSpaghettiTestsKapatsevichTests.dll" Expanded="true" />

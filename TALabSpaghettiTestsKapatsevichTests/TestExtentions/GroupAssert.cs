@@ -27,8 +27,6 @@ namespace TALabSpaghettiTestsKapatsevichTests.TestExtentions
             }
         }
 
-        public bool ShowFailingFilePath { get; set; }
-
         public void Add(Action assertion)
         {
             try
@@ -51,7 +49,7 @@ namespace TALabSpaghettiTestsKapatsevichTests.TestExtentions
 
             exceptionTrace.AppendLine("Test failed because one or more assertions failed: ");
 
-            foreach (var assertion in this.assertions)
+            foreach (var assertion in assertions)
             {
                 if (exceptionCount > 0) exceptionTrace.AppendLine();
 

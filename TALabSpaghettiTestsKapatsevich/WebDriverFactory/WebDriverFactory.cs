@@ -45,6 +45,7 @@ namespace TALabSpaghettiTestsKapatsevich.WebDriverFactory
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
 
+
             ////testing customDriver
             driver = new CustomWebDriver(driver);
         }

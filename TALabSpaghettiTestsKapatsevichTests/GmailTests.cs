@@ -173,8 +173,10 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
             group.Add(() => Assert.IsTrue(gmailService.IsMessageFromUserIsImportantInTrash(userOne, new Message() { Title = "Attached tn messagec titlec" }),
                                         "IsMessageFromUserIsImportantInTrash(userOne)"));
+            group.Add(() => Assert.IsTrue(gmailService.IsMessageFromUserIsImportantInTrash(userOne, new Message() { Title = "Attached a messagep titlep" }),
+                                        "IsMessageFromUserIsImportantInTrash(userOne)"));
             group.Add(() => Assert.IsTrue(gmailService.IsMessageFromUserInInbox(userOne, new Message() { Title = "sdgsdgsdgsd" }),
-                                        "IsMessageFromUserInInbox(userOne)"));
+                                        "IsMessageFromUserInInbox(userOne)"));            
             group.Add(() => Assert.IsFalse(gmailService.IsMessageFromUserIsImportant(userOne, new Message() { Title = "Spam message title nhs" }),
                                         "IsMessageFromUserIsImportant(userOne)"));
 
