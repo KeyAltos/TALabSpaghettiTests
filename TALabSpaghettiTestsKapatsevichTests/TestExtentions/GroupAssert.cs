@@ -5,6 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TALabSpaghettiTestsKapatsevich;
+using TALabSpaghettiTestsKapatsevich.TestsConstants;
+using TALabSpaghettiTestsKapatsevich.WebDriverFactory;
 
 namespace TALabSpaghettiTestsKapatsevichTests.TestExtentions
 {
@@ -35,7 +38,8 @@ namespace TALabSpaghettiTestsKapatsevichTests.TestExtentions
             }
             catch (AssertionException exception)
             {
-                this.assertions.Add(new GroupedAssertion(exception.Message,
+                new WebDriverFactory(Constants.browserForTesting).GetDriver().MakeScreenshot();
+                assertions.Add(new GroupedAssertion(exception.Message,
                     new StackTrace(exception, true)));
             }
         }
