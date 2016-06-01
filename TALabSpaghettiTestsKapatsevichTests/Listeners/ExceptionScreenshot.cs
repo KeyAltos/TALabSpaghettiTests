@@ -46,7 +46,7 @@ namespace TALabSpaghettiTestsKapatsevichTests.Listeners
         }
 
         public void TestFinished(TestResult result)
-        {
+        {       
             var isFailure =
             result.ResultState == ResultState.Error ||
             result.ResultState == ResultState.Failure;

@@ -40,9 +40,13 @@ namespace TALabSpaghettiTestsKapatsevichTests
             if (TestContext.CurrentContext.Result.State==TestState.Error)
             {
                 Debug.WriteLine("BaseTestClass: TearDown: Making screenshot");
-                driver.MakeScreenshot();
+                if (driver!=null)
+                {
+                    driver.MakeScreenshot();
+                }
+                
             }
-            //driverFactory.CloseDriver();
+            driverFactory.CloseDriver();
         }
 
         [TestFixtureTearDown]

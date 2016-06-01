@@ -163,7 +163,7 @@ namespace TALabSpaghettiTestsKapatsevichTests
         }
         
         
-        //[Ignore]     
+        [Ignore]     
         [Test]
         public void NewFeatureTesting()
         {            
@@ -182,6 +182,15 @@ namespace TALabSpaghettiTestsKapatsevichTests
 
             group.Verify();
         }
+
+        //[Ignore] 
+        [Test]
+        public void EcxeptionTest()
+        {
+            gmailService.LoginIn(userTwo);
+            throw new Exception("test ecx");
+        }
+
     }
 
 }
